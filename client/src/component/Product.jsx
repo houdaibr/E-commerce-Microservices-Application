@@ -4,6 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
+
 import Modal from "react-modal";
 
 const NotLoggedInModal = ({ isOpen, handleClose, handleLogin }) => {
@@ -43,6 +44,7 @@ const customModalStyles = {
     border: "1px solid #ccc",
     borderRadius: "4px",
     backgroundColor: "#fff",
+    color : ""
   },
   overlay: {
     position: "fixed",
@@ -100,11 +102,7 @@ const Product = () => {
         "http://localhost:5001/api/commandes",
         [commande]
       );
-      await axios.post("http://localhost:5001/api/add-to-cart", {
-        productId: product._id,
-        quantity: 1, 
-      });
-
+      
       setOrderId(response.data[0]._id);
       setError(null);
       setCommandeModalIsOpen(true);

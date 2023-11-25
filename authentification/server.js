@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const dbConfig = require("./app/config/db.config");
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -14,22 +14,12 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("./app/models");
-const Role = db.role;
+const db = require('./app/config/key').mongoURI;
 
-db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-  })
-  .catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-  });
-
+mongoose
+        .connect(db)
+        .then( ()=> console.log('MongoDB Connected ...'))
+        .catch( err=> console.log(err));
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });

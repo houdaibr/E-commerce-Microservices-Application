@@ -15,9 +15,16 @@ router.post('/', async (req, res) => {
       montant,
     });
 
+
+
     if (response.status === 200) {
       // Le paiement a réussi
-      res.json({ success: true, message: 'Le paiement a été effectué avec succès' });
+const nouveauPaiement = new Paiement({ commandeId, montant });
+const paiementEnregistre = await nouveauPaiement.save();
+
+res.json({ success: true, message: 'Le paiement a été effectué avec succès', paiement: paiementEnregistre });
+
+
     } else {
       // La mise à jour de la commande a échoué
       res.json({ success: false, message: 'La mise à jour de la commande a échoué' });
