@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-ms
+  namespace: mcommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-ms
+  template:
+    metadata:
+      labels:
+        app: product-ms
+        version: v1
+    spec:
+      containers:
+        - name: product-ms
+          image: houdaibr/produit:2.2.2
+          ports:
+            - containerPort: 5000
+          resources: {}
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mcommerce-secret
+                  key: mcommerce-database
+            - name: MONGO_SERVICE
+              value: mcommerce-mongodb-service
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-ms-service
+  namespace: mcommerce
+spec:
+  selector:
+    app: product-ms
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP
