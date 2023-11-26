@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-        origin: ['http://localhost:3000', 'http://localhost:5002'], // Autorisez les origines spécifiées
+        origin: ['http://localhost:3000', 'http://localhost:5002','http://localhost:5002'], // Autorisez les origines spécifiées
         methods: ['GET', 'POST', 'PUT', 'DELETE'], // Autorisez les méthodes spécifiées
         allowedHeaders: ['Content-Type', 'Authorization'], // Autorisez les en-têtes spécifiés
         credentials: true // Autorisez les cookies et les informations d'authentification

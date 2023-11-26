@@ -85,12 +85,6 @@ const Product = () => {
   };
 
   const handleCommandeSubmit = async (product) => {
-    if (!user) {
-      setNotLoggedInModalIsOpen(true);
-      return;
-    }
-
-
     try {
       const commande = {
         id: 1,
@@ -102,7 +96,7 @@ const Product = () => {
         "http://localhost:5001/api/commandes",
         [commande]
       );
-      
+
       setOrderId(response.data[0]._id);
       setError(null);
       setCommandeModalIsOpen(true);
@@ -111,6 +105,20 @@ const Product = () => {
       setOrderId(null);
       setError(error.message);
       setCommandeModalIsOpen(true);
+    }
+  };
+
+  const handlePayment = async () => {
+    try {
+      await axios.post("http://localhost:5002/api/paiements", {
+        commandeId: orderId,
+        montant: product.prix,
+      });
+
+      setPaymentModalIsOpen(true);
+      console.log("Le paiement a été effectué avec succès");
+    } catch (error) {
+      console.error("Erreur lors du paiement :", error.message);
     }
   };
 
@@ -181,13 +189,12 @@ const Product = () => {
             {product.description}
           </p>
           <Link
-          to="#"
-          className="btn btn-outline-dark px-4 py-2"
-          onClick={() => handleCommandeSubmit(product)} // Call the function to add to cart
-          style={{ backgroundColor: "#e59d26", color: "#ffffff", fontFamily: "Poppins", borderColor: "#e59d26" }}
-        >
-          Commander
-        </Link>
+            to="#"
+            className="btn btn-outline-dark px-4 py-2"
+            onClick={() => handleCommandeSubmit(product)}
+          >
+            Commander
+          </Link>
           {orderId && (
             <Modal
               isOpen={commandeModalIsOpen}
@@ -205,21 +212,30 @@ const Product = () => {
               <div style={customModalStyles.buttonContainer}>
                 <button
                   className="d-flex justify-content-center btn btn-secondary fixed-bottom p-3 text-center"
-                  onClick={() => {
-                    handleCommandeModalClose();
-                    setPaymentModalIsOpen(true);
-                  }}
+                  onClick={handlePayment}
                 >
                   Payer ma commande
                 </button>
               </div>
             </Modal>
           )}
-          <NotLoggedInModal
-            isOpen={notLoggedInModalIsOpen}
-            handleClose={handleNotLoggedInModalClose}
-            handleLogin={() => navigate('/login')}
-          />
+          <Modal
+            isOpen={paymentModalIsOpen}
+            onRequestClose={handleCommandeModalClose}
+            style={customModalStyles}
+          >
+            <button onClick={handleCommandeModalClose}>Fermer</button>
+            <br />
+            <br />
+
+            <p className="text-center text-success fw-bold">
+              La commande a été payée avec succès.
+              <br />
+              ID de la commande : {orderId}
+              <br />
+              Montant à payer : {product.prix}
+            </p>
+          </Modal>
         </div>
       </>
     );

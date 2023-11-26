@@ -21,32 +21,6 @@ router.post('/', async (req, res) => {
     }
   });
   
-  router.post('/add-to-cart', async (req, res) => {
-    try {
-      const { productId } = req.body;
-      const userId = localStorage.getItem('user'); // Fetch the user ID from localStorage
-      if (!userId) {
-        return res.status(400).json({ error: 'User not logged in' });
-      }
-  
-      // Fetch the user's cart by their ID and update it with the new product
-      const userCart = await Cart.findOneAndUpdate(
-        { userId }, // Adjust with your user and cart schema
-        { $push: { products: productId } }, // Push the product ID into the user's cart
-        { new: true, upsert: true }
-      );
-  
-      if (!userCart) {
-        return res.status(500).json({ error: 'Could not add product to the cart' });
-      }
-  
-      res.json({ message: 'Product added to the cart' });
-    } catch (error) {
-      console.error('Error adding product to cart:', error);
-      res.status(500).json({ error: 'Error adding product to cart' });
-    }
-  });
-  
 
 // Récupérer toutes les commandes
 router.get('/', async (req, res) => {
@@ -119,6 +93,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Erreur lors de la suppression de la commande' });
   }
 });
-
 
 module.exports = router;

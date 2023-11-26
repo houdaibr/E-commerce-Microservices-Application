@@ -12,7 +12,6 @@ const PaiementSchema = new Schema({
   },
   montant: {
     type: Number,
-    required: true
   },
   // Autres propriétés de paiement
 });
@@ -20,3 +19,4 @@ const PaiementSchema = new Schema({
 const Paiement = mongoose.model('paiement', PaiementSchema);
 
 module.exports = Paiement;
+
