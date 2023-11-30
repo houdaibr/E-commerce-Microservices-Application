@@ -16,12 +16,7 @@ const CommandeSchema = new Schema({
         type: Date,
         default: Date.now
     },
-   
-    
 
-
-    
 });
   
-
 module.exports = Commande = mongoose.model('commande' , CommandeSchema);

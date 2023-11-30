@@ -5,6 +5,5 @@ COPY ["package.json", "package-lock.json", "./"]
 RUN npm install --silent
 COPY . .
 EXPOSE 5007
-RUN node data.js
 CMD ["node", "server.js"]
 

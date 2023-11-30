@@ -14,26 +14,20 @@ import Cart from "./component/Cart"
 import CheckOut from './component/Checkout';
 
 function App() {
-
   return (
   <div>
-
- 
     <Navbar/>
   <Routes>
-  
     <Route path="/" element={<Home/>} />
     <Route path="/products" element={<Products/>} />
     <Route path="/about" element={<About/>} />
     <Route path="/products/:id" element={<Product/>} />
     <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile1 />} />
-
-            <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<CheckOut />} />
-    
-  </Routes>
+    <Route path="/register" element={<Register />} />
+    <Route path="/profile" element={<Profile1 />} />
+    <Route path="/cart" element={<Cart />} />
+    <Route path="/checkout" element={<CheckOut />} />
+   </Routes>
 
   
   </div>

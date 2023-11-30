@@ -73,13 +73,7 @@ router.put('/:id/paiement', async (req, res) => {
     console.error('Erreur lors de la mise à jour du paiement de la commande:', error);
     res.status(500).json({ error: 'Erreur lors de la mise à jour du paiement de la commande' });
   }
-});
-
-
-
-
-  
-  
+});  
 // Supprimer une commande
 router.delete('/:id', async (req, res) => {
   try {

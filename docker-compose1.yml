@@ -1,0 +1,41 @@
+version: '3'
+services:
+  order-service:
+    build:
+      context: ./commande
+    ports:
+      - "7001:5001"
+    environment:
+      NODE_ENV: production
+
+  payment-service:
+    build:
+      context: ./paiement
+    ports:
+      - "7002:5002"
+
+  product-service:
+    build:
+      context: ./produit
+    ports:
+      - "7003:5000"
+    environment:
+      NODE_ENV: production
+
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3009:3000"
+
+  mongo-service:
+    image: mongo:latest
+    container_name: mongodb-container
+    volumes:
+      - /absolute/path/to/mongodb-volume-microservice:/data/db
+    networks:
+      - mongo-network1
+
+networks:
+  mongo-network1:
+    driver: bridge

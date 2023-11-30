@@ -1,0 +1,42 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: sa-external-services
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: frontend   # Assuming your Ingress Gateway service name
+        port:
+          number: 3000
+  - match:
+      - uri:
+          prefix: /products
+    route:
+    - destination:
+        host: product-ms-service   # Assuming your Ingress Gateway service name
+        port:
+          number: 5000
+  - match:
+      - uri:
+           prefix: /cart
+    route:
+    - destination:
+        host: commande-service   # Assuming your Ingress Gateway service name
+        port:
+          number: 5001     
+  - match:
+      - uri:
+          prefix: /payment
+    route:
+    - destination:
+        host: payment-ms-service   # Assuming your Ingress Gateway service name
+        port:
+          number: 5002    

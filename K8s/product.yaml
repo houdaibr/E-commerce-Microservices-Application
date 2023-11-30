@@ -28,8 +28,6 @@ spec:
                   key: mcommerce-database
             - name: MONGO_SERVICE
               value: mcommerce-mongodb-service
-
-
 ---
 apiVersion: v1
 kind: Service

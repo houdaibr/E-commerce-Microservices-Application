@@ -13,8 +13,6 @@ mongoose
   .connect(db)
   .then(() => console.log('MongoDB Connected ...'))
   .catch((err) => console.log(err));
-
-// Add the CORS headers middleware
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -22,9 +20,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
-
 app.use('/api/products', items);
-
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => console.log(`Server started on port ${port}`));
